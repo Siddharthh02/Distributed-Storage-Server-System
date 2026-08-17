@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudVault | System Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/architecture.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">☁</div>
+                <div>CloudVault</div>
+            </div>
+
+            <div class="menu-label">Overview</div>
+            <nav class="menu">
+                <a href="index.html">Dashboard</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <div class="crumbs">AWS / us-east-1 / Architecture</div>
+                <div class="status">All Systems Operational</div>
+            </div>
+
+            <div class="header">
+                <h1>System Architecture</h1>
+                <p>AWS Distributed Storage Infrastructure - us-east-1</p>
+            </div>
+
+            <section class="canvas">
+                <div class="diagram">
+                    <div class="diagram-title">AWS Cloud Infrastructure - Distributed Storage Data Flow</div>
+
+                    <div class="flow-wrap">
+                        <svg class="flow-svg" viewBox="0 0 820 210" preserveAspectRatio="none" aria-hidden="true">
+                            <path class="flow-line flow-line-strong" d="M145 104 H245"></path>
+                            <path class="flow-line" d="M340 104 H438"></path>
+                            <path class="flow-line flow-line-strong" d="M585 104 H655"></path>
+                            <path class="flow-line" d="M500 104 V42"></path>
+                            <path class="flow-line" d="M500 104 V170"></path>
+                        </svg>
+
+                        <div class="flow">
+                            <article class="client">
+                                <div class="box-title">User / Client</div>
+                                <div class="box-sub">HTTPS</div>
+                            </article>
+
+                            <div class="arrow">→</div>
+
+                            <article class="service">
+                                <div class="box-title">AWS ALB</div>
+                                <div class="box-sub">Elastic LB</div>
+                            </article>
+
+                            <div class="arrow">→</div>
+
+                            <div class="stack">
+                                <article class="node">
+                                    <div class="box-title">Node-1</div>
+                                </article>
+                                <article class="node">
+                                    <div class="box-title">Node-2</div>
+                                </article>
+                                <article class="node">
+                                    <div class="box-title">Node-3</div>
+                                </article>
+                            </div>
+
+                            <div class="arrow">→</div>
+
+                            <article class="storage">
+                                <div class="box-title">Amazon EFS</div>
+                                <div class="box-sub">Shared Distributed Storage</div>
+                            </article>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="component-strip" aria-label="Architecture components">
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">🖥</span>Amazon EC2</div>
+                        <span class="component-tag tag-blue">Compute Nodes</span>
+                    </div>
+                    <div class="component-body">Multiple EC2 instances act as storage nodes, each handling file upload and retrieval requests routed by the load balancer.</div>
+                </article>
+
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">💾</span>Amazon EFS</div>
+                        <span class="component-tag tag-green">Shared Storage</span>
+                    </div>
+                    <div class="component-body">Elastic File System is mounted across all EC2 instances, enabling concurrent read/write access from any node to the same data.</div>
+                </article>
+
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">🛡</span>AWS Elastic LB</div>
+                        <span class="component-tag tag-orange">Traffic Distribution</span>
+                    </div>
+                    <div class="component-body">Application Load Balancer distributes incoming client requests across available EC2 nodes, preventing bottlenecks on a single server.</div>
+                </article>
+
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">📄</span>Amazon RDS</div>
+                        <span class="component-tag tag-orange">Metadata Management</span>
+                    </div>
+                    <div class="component-body">MySQL database stores file metadata — name, path, size, upload timestamp, and the serving EC2 node for each stored file.</div>
+                </article>
+
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">📊</span>AWS CloudWatch</div>
+                        <span class="component-tag tag-teal">Observability</span>
+                    </div>
+                    <div class="component-body">Tracks CPU usage, network I/O, disk utilization and memory across all EC2 nodes. Triggers alarms on threshold breaches.</div>
+                </article>
+
+                <article class="component-card">
+                    <div class="component-head">
+                        <div class="component-name"><span class="component-icon">🔐</span>IAM + Security Groups</div>
+                        <span class="component-tag tag-red">Access Control</span>
+                    </div>
+                    <div class="component-body">IAM roles and VPC security groups enforce least-privilege access, ensuring only authorized services interact with the infrastructure.</div>
+                </article>
+            </section>
+        </main>
+    </div>
+    <script src="js/architecture.js"></script>
+</body>
+</html>
