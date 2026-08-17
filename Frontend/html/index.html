@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudVault | File Operations Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="app">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-badge">☁</div>
+                <div>
+                    <div>CloudVault</div>
+                    <small style="color: #627792; font-weight: 600;">Distributed File Operations</small>
+                </div>
+            </div>
+            <div class="top-actions">
+                <span class="pill">All Systems Operational</span>
+                <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">Dark Mode</button>
+                <a class="ghost-link secondary" href="architecture.html">Architecture View</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div>
+                <h1>File Control Center</h1>
+                <p>
+                    Manage shared storage with a clean real-time dashboard. Upload, track, download, and delete files instantly across your distributed nodes with live refresh.
+                </p>
+            </div>
+            <div class="metrics">
+                <article class="metric">
+                    <div class="label">Total Files</div>
+                    <div class="value" id="metricCount">0</div>
+                </article>
+                <article class="metric">
+                    <div class="label">Last Sync</div>
+                    <div class="value" id="metricSync">--</div>
+                </article>
+                <article class="metric monitoring">
+                    <div class="metric-monitoring-title">
+                        <div class="label">Monitoring</div>
+                        <div class="value">CloudWatch</div>
+                    </div>
+                    <a class="monitoring-link" href="https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards/dashboard/graphs" target="_blank" rel="noopener noreferrer">Open CloudWatch</a>
+                </article>
+            </div>
+        </section>
+
+        <main class="content">
+            <section class="card">
+                <h2>Upload File</h2>
+                <p class="card-sub">Send files directly to shared distributed storage.</p>
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <input class="file-picker" type="file" name="file" required>
+                    <div class="action-row">
+                        <button type="submit" class="upload-btn">Upload File</button>
+                    </div>
+                    <p class="hint">Supported by live sync to all connected nodes.</p>
+                </form>
+                <p class="status" id="status"></p>
+            </section>
+
+            <section class="card">
+                <h2>Live File Inventory</h2>
+                <p class="card-sub">Files available in your shared storage right now.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fileList">
+                        </tbody>
+                    </table>
+                </div>
+                <p id="emptyState" class="empty" hidden>No files yet. Upload your first document to get started.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
